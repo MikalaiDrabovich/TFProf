@@ -1,4 +1,4 @@
-#Default TensorFlow Profiler How-To
+# Default TensorFlow Profiler How-To
 
 This is the example of maximum output with automatic 'advice', though the results may not be very actionable. 
 In that case, you may want to take a look at https://github.com/MikalaiDrabovich/TensorScope
