@@ -5,7 +5,6 @@ and generate automatic 'advice, though the results may or may not not be actiona
 In the latter case you may want to take a look at 
 https://github.com/MikalaiDrabovich/TensorScope
 
-
 Output of TFProf for training AlexNet on 1060
 
 =========================Options=============================
@@ -75,18 +74,12 @@ VariableV2                       86.95MB (0.83%, 0.79%),            34us (0.01%,
 Mul                               4.72MB (0.04%, 0.04%),            20us (0.00%, 0.00%),             0us (0.00%, 0.00%),            20us (0.01%, 0.01%)
 
 ======================End of Report==========================
-
-
 generating trace file. /job:localhost/replica:0/task:0/device:gpu:0 peak memory: 1116.80 MB
-
 Timeline file is written to timeline_tf_profiler.json_100. Open a Chrome browser, enter URL chrome://tracing and load the timeline file.
-
 2018-05-03 21:19:52.983108: step 90, duration = 0.274 2018-05-03 21:19:54.921238: Forward-backward across 100 steps, 0.221 +/- 0.018 sec / batch
-
 ExpensiveOperationChecker: top 1 operation type: Conv2D, cpu: 81.96ms, accelerator: 56.67ms, total: 138.63ms (32.18%) top 2 operation type: Conv2DBackpropFilter, cpu: 29.84ms, accelerator: 61.01ms, total: 90.85ms (21.09%) top 3 operation type: Conv2DBackpropInput, cpu: 29.61ms, accelerator: 44.12ms, total: 73.72ms (17.11%) top 1 graph node: gradients, cpu: 0us, accelerator: 0us, total: 0us top 2 graph node: conv1, cpu: 11us, accelerator: 1.34ms, total: 1.35ms top 3 graph node: conv2, cpu: 8us, accelerator: 934us, total: 943us alexnet_benchmark_orig.py:313: (gradient), cpu: 59.73ms, accelerator: 161.76ms, total: 221.49ms alexnet_benchmark_orig.py:313:, cpu: 82.20ms, accelerator: 111.11ms, total: 193.32ms
-
 OperationChecker: Found operation using NHWC data_format on GPU. Maybe NCHW is faster.
-
 AcceleratorUtilizationChecker: device: /job:localhost/replica:0/task:0/device:gpu:0 utilization: 1.00
+
 
 
