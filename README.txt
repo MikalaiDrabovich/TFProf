@@ -1,7 +1,5 @@
-# Default TensorFlow Profiler How-To
-
-This is the example of maximum output with automatic 'advice', though the results may not be very actionable. 
-In that case, you may want to take a look at https://github.com/MikalaiDrabovich/TensorScope
+An example of how to use the default profiler in TensorFlow. All options (parameters, time) and automatic 'advice' are enabled, though the results may or may not not be actionable. In the latter case you may want to take a look at 
+https://github.com/MikalaiDrabovich/TensorScope
 
 =========================Options=============================
 -max_depth                  10000
@@ -15,7 +13,7 @@ In that case, you may want to take a look at https://github.com/MikalaiDrabovich
 -min_params                 0
 -min_float_ops              0
 -min_occurrence             0
--step                       -1
+-step                     
 -order_by                   micros
 -account_type_regexes       .*
 -start_name_regexes         .*
@@ -28,16 +26,12 @@ In that case, you may want to take a look at https://github.com/MikalaiDrabovich
 
 ==================Model Analysis Report======================
 
-
-==================Model Analysis Report======================
-
 Doc:
 op: The nodes are operation kernel type, such as MatMul, Conv2D. Graph nodes belonging to the same type are aggregated together.
 requested bytes: The memory requested by the operation, accumulatively.
 total execution time: Sum of accelerator execution time and cpu execution time.
 cpu execution time: The time from the start to the end of the operation. It's the sum of actual cpu run time plus the time that it spends waiting if part of computation is launched asynchronously.
 accelerator execution time: Time spent executing on the accelerator. This is normally measured by the actual hardware library.
-
 
 Profile:
 node name | requested bytes | total execution time | accelerator execution time | cpu execution time
@@ -87,3 +81,5 @@ ExpensiveOperationChecker: top 1 operation type: Conv2D, cpu: 81.96ms, accelerat
 OperationChecker: Found operation using NHWC data_format on GPU. Maybe NCHW is faster.
 
 AcceleratorUtilizationChecker: device: /job:localhost/replica:0/task:0/device:gpu:0 utilization: 1.00
+
+
