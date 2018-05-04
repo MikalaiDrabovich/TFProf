@@ -44,6 +44,8 @@ import tensorflow as tf
 
 FLAGS = None
 
+from tensorflow.python.profiler import option_builder
+from tensorflow.python.profiler import model_analyzer
 
 def print_activations(t):
   print(t.op.name, ' ', t.get_shape().as_list())
@@ -181,9 +183,38 @@ def time_tensorflow_run(session, target, info_string):
   num_steps_burn_in = 10
   total_duration = 0.0
   total_duration_squared = 0.0
+  
+  profiler = model_analyzer.Profiler(session.graph)
+
   for i in xrange(FLAGS.num_batches + num_steps_burn_in):
     start_time = time.time()
-    _ = session.run(target)
+
+    
+    if i % 10 == 0:
+      run_meta = tf.RunMetadata()
+      _ = session.run(target,
+                   options=tf.RunOptions(
+                       trace_level=tf.RunOptions.FULL_TRACE),
+                   run_metadata=run_meta)
+      profiler.add_step(i, run_meta)
+
+      # Profile the parameters of your model.
+      profiler.profile_name_scope(options=(option_builder.ProfileOptionBuilder
+          .trainable_variables_parameter()))
+
+      # Or profile the timing of your model operations.
+      opts = option_builder.ProfileOptionBuilder.time_and_memory()
+      profiler.profile_operations(options=opts)
+
+      # Or you can generate a timeline:
+      opts = (option_builder.ProfileOptionBuilder(
+              option_builder.ProfileOptionBuilder.time_and_memory())
+              .with_step(i)
+              .with_timeline_output('timeline_tf_profiler.json').build())
+      profiler.profile_graph(options=opts)
+    else:
+      _ = session.run(target)
+            
     duration = time.time() - start_time
     if i >= num_steps_burn_in:
       if not i % 10:
@@ -191,12 +222,15 @@ def time_tensorflow_run(session, target, info_string):
                (datetime.now(), i - num_steps_burn_in, duration))
       total_duration += duration
       total_duration_squared += duration * duration
+      
+      
   mn = total_duration / FLAGS.num_batches
   vr = total_duration_squared / FLAGS.num_batches - mn * mn
   sd = math.sqrt(vr)
   print ('%s: %s across %d steps, %.3f +/- %.3f sec / batch' %
          (datetime.now(), info_string, FLAGS.num_batches, mn, sd))
 
+  profiler.advise(model_analyzer.ALL_ADVICE)
 
 
 def run_benchmark():
@@ -227,7 +261,8 @@ def run_benchmark():
     sess.run(init)
 
     # Run the forward benchmark.
-    time_tensorflow_run(sess, pool5, "Forward")
+    # (MDR: commented out to get results only for training)
+    #time_tensorflow_run(sess, pool5, "Forward")
 
     # Add a simple objective so we can calculate the backward pass.
     objective = tf.nn.l2_loss(pool5)
@@ -257,3 +292,4 @@ if __name__ == '__main__':
   )
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+
