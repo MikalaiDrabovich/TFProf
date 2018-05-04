@@ -6,7 +6,8 @@ In the latter case you may want to take a look at
 https://github.com/MikalaiDrabovich/TensorScope
 
 
-Output of TFProf for training AlexNet with GPU support
+Output of TFProf for training AlexNet on 1060
+
 =========================Options=============================
 -max_depth             '     10000
 -min_bytes                  1
