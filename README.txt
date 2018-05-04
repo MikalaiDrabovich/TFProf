@@ -5,6 +5,8 @@ and generate automatic 'advice, though the results may or may not not be actiona
 In the latter case you may want to take a look at 
 https://github.com/MikalaiDrabovich/TensorScope
 
+
+Output of TFProf for training AlexNet with GPU support
 =========================Options=============================
 -max_depth             '     10000
 -min_bytes                  1
