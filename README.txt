@@ -1,6 +1,9 @@
-An example of how to use the default profiler in TensorFlow, provide options (parameters, time) and
-generate automatic 'advice, though the results may or may not not be actionable. 
-In the latter case you may want to take a look at https://github.com/MikalaiDrabovich/TensorScope
+TFProf
+
+An example of how to use the default profiler in TensorFlow, provide options (parameters, time) 
+and generate automatic 'advice, though the results may or may not not be actionable. 
+In the latter case you may want to take a look at 
+https://github.com/MikalaiDrabovich/TensorScope
 
 =========================Options=============================
 -max_depth             '     10000
